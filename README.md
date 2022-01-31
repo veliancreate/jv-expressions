@@ -1,1 +1,19 @@
 # jv-expressions
+
+## Cron Expression parser
+
+### Usage
+
+Assuming you have go installed and the GO111MODULE env variable set to "on" 
+
+- Run `go install` from the root
+- Run `jv-expressions "<expression>"`
+
+### Tests
+
+- Run `go test ./...`
+
+### Notes
+
+Only the `*` (any) command is currently supported. The project scaffolds the other parsers so that the parsiing logic itself can be added to the `Parse` function of each type in the `parsers` package, and extending the supported types in the `NewCronExpression` function
+
