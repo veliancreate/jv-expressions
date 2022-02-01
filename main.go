@@ -18,10 +18,6 @@ func main() {
 	rawExpr := os.Args[1]
 
 	expr := strings.Split(rawExpr, " ")
-	if len(expr) != 6 {
-		fmt.Printf("not enough expressions")
-		os.Exit(1)
-	}
 
 	parser, err := parsers.NewCronParser(expr)
 	if err != nil {
