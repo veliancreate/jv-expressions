@@ -26,7 +26,11 @@ func TestAnyParser(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			parsed := tt.parser.Parse()
+			parsed, err := tt.parser.Parse()
+			if err != nil {
+				t.Fatalf("error parsing * %v", err)
+			}
+
 			if parsed != tt.expected {
 				t.Fatalf("expected %v, got %v", tt.expected, parsed)
 			}

@@ -18,7 +18,7 @@ type Any struct {
 	minAndMaxGetter timeunits.MinAndMaxGetter
 }
 
-func (s Any) Parse() string {
+func (s Any) Parse() (string, error) {
 	min := s.minAndMaxGetter.Min()
 	max := s.minAndMaxGetter.Max()
 	var output string
@@ -30,5 +30,5 @@ func (s Any) Parse() string {
 		}
 	}
 
-	return output
+	return output, nil
 }

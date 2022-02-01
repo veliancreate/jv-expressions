@@ -14,6 +14,6 @@ type Step struct {
 	minAndMaxGetter timeunits.MinAndMaxGetter
 }
 
-func (s Step) Parse() string {
-	return ""
+func (s Step) Parse() (string, error) {
+	return "", nil
 }
