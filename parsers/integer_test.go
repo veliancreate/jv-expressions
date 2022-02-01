@@ -14,12 +14,12 @@ func TestNumberParser(t *testing.T) {
 		expected    string
 	}{
 		{
-			name:        "prints out the values between the min and max - day of week",
+			name:        "fails when the input is below the min",
 			parser:      NewInteger(0, timeunits.NewDayOfWeek()),
 			shouldError: true,
 		},
 		{
-			name:        "prints out the values between the min and max - month",
+			name:        "fails when the input is below the max",
 			parser:      NewInteger(8, timeunits.NewDayOfWeek()),
 			shouldError: true,
 		},

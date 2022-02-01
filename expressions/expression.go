@@ -60,7 +60,7 @@ func (e *Expression) ToString() string {
 		day of month: %s
 		month: %s
 		day of week: %s
-		command: %s  
+		command: %s
 	`,
 		e.Minute,
 		e.Hour,
