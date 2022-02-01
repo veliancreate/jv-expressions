@@ -1,7 +1,5 @@
 # jv-expressions
 
-## Cron Expression parser
-
 ### Usage
 
 Assuming you have the latest version of go installed and the GO111MODULE env variable set to "on"
