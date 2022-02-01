@@ -33,7 +33,7 @@ func getParser(val string, getter timeunits.MinAndMaxGetter) (Parser, error) {
 
 	splitRange := strings.Split(val, "-")
 	if len(splitRange) == 2 {
-		return NewRange([]string{splitRange[0], splitRange[2]}, getter), nil
+		return NewRange([]string{splitRange[0], splitRange[1]}, getter), nil
 	}
 
 	return nil, fmt.Errorf("unsupported type")
