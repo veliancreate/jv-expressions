@@ -4,7 +4,7 @@
 
 ### Usage
 
-Assuming you have go installed and the GO111MODULE env variable set to "on" 
+Assuming you have go installed and the GO111MODULE env variable set to "on"
 
 - Run `go install` from the root
 - Run `jv-expressions "<expression>"`
@@ -15,5 +15,5 @@ Assuming you have go installed and the GO111MODULE env variable set to "on"
 
 ### Notes
 
-Only the `*` (any) command is currently supported. The project scaffolds the other parsers so that the parsiing logic itself can be added to the `Parse` function of each type in the `parsers` package, and extending the supported types in the `NewCronExpression` function
+Only the `*` (any) and `<integer>` formate are currently supported. The project scaffolds the other parsers so that the parsiing logic itself can be added to the `Parse` function of each type in the `parsers` package, and extending the supported types in the `NewCronParser` function
 
