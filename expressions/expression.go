@@ -20,27 +20,27 @@ func NewCronExpression(parser parsers.CronParser) (*Expression, error) {
 
 	minute, err := parser.Minute.Parse()
 	if err != nil {
-		return expression, fmt.Errorf("couldnt parse minute :: %v", err)
+		return expression, fmt.Errorf("couldnt parse minute :: %w", err)
 	}
 
 	hour, err := parser.Hour.Parse()
 	if err != nil {
-		return expression, fmt.Errorf("couldnt parse hour :: %v", err)
+		return expression, fmt.Errorf("couldnt parse hour :: %w", err)
 	}
 
 	dayOfMonth, err := parser.DayOfMonth.Parse()
 	if err != nil {
-		return expression, fmt.Errorf("couldnt parse day of month :: %v", err)
+		return expression, fmt.Errorf("couldnt parse day of month :: %w", err)
 	}
 
 	month, err := parser.Month.Parse()
 	if err != nil {
-		return expression, fmt.Errorf("couldnt parse month :: %v", err)
+		return expression, fmt.Errorf("couldnt parse month :: %w", err)
 	}
 
 	dayOfWeek, err := parser.DayOfWeek.Parse()
 	if err != nil {
-		return expression, fmt.Errorf("couldnt parse day of week :: %v", err)
+		return expression, fmt.Errorf("couldnt parse day of week :: %w", err)
 	}
 
 	return &Expression{
