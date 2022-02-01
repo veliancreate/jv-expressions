@@ -14,6 +14,6 @@ type List struct {
 	minAndMaxGetter timeunits.MinAndMaxGetter
 }
 
-func (s List) Parse() string {
-	return ""
+func (s List) Parse() (string, error) {
+	return "", nil
 }
