@@ -9,13 +9,13 @@ import (
 func TestNewCronExpression(t *testing.T) {
 	tests := []struct {
 		name   string
-		arg    []string
+		arg    string
 		expr   *Expression
 		parser parsers.CronParser
 	}{
 		{
 			name: "initial example",
-			arg:  []string{"1", "2", "3", "4", "5", "/usr/bin/find"},
+			arg:  `1 2 3 4 5 /usr/bin/find`,
 			expr: &Expression{
 				Minute:     "1",
 				Hour:       "2",

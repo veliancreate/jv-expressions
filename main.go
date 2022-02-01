@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/veliancreate/jv-expressions/expressions"
 	"github.com/veliancreate/jv-expressions/parsers"
@@ -17,9 +16,7 @@ func main() {
 
 	rawExpr := os.Args[1]
 
-	expr := strings.Split(rawExpr, " ")
-
-	parser, err := parsers.NewCronParser(expr)
+	parser, err := parsers.NewCronParser(rawExpr)
 	if err != nil {
 		fmt.Printf("getting new cron parser :: %v", err)
 		os.Exit(1)

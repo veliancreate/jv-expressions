@@ -2,6 +2,7 @@ package parsers
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/veliancreate/jv-expressions/timeunits"
 )
@@ -15,8 +16,10 @@ type CronParser struct {
 	Command    string
 }
 
-func NewCronParser(expr []string) (CronParser, error) {
+func NewCronParser(rawExpr string) (CronParser, error) {
 	var cronParser CronParser
+
+	expr := strings.Split(rawExpr, " ")
 
 	if len(expr) != 6 {
 		return cronParser, fmt.Errorf("not enough expressions")
