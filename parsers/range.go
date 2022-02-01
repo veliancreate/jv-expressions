@@ -1,8 +1,12 @@
 package parsers
 
-import "github.com/veliancreate/jv-expressions/timeunits"
+import (
+	"fmt"
 
-func NewRange(val string, minAndMaxGetter timeunits.MinAndMaxGetter) Range {
+	"github.com/veliancreate/jv-expressions/timeunits"
+)
+
+func NewRange(val []string, minAndMaxGetter timeunits.MinAndMaxGetter) Range {
 	return Range{
 		val,
 		minAndMaxGetter,
@@ -10,10 +14,34 @@ func NewRange(val string, minAndMaxGetter timeunits.MinAndMaxGetter) Range {
 }
 
 type Range struct {
-	val             string
+	val             []string
 	minAndMaxGetter timeunits.MinAndMaxGetter
 }
 
-func (s Range) Parse() (string, error) {
-	return "", nil
+func (r Range) Parse() (string, error) {
+	var output string
+
+	first, err := stringToInt(r.val[0], r.minAndMaxGetter)
+	if err != nil {
+		return "", fmt.Errorf("could not convert range value to int due to %w", err)
+	}
+
+	last, err := stringToInt(r.val[1], r.minAndMaxGetter)
+	if err != nil {
+		return "", fmt.Errorf("could not convert range value to int due to %w", err)
+	}
+
+	if first > last {
+		return "", fmt.Errorf("first range value is higher than last")
+	}
+
+	for i := first; i <= last; i++ {
+		if i == first {
+			output = fmt.Sprintf("%v", i)
+		} else {
+			output = fmt.Sprintf("%v %v", output, i)
+		}
+	}
+
+	return output, nil
 }
