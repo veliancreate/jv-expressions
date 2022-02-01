@@ -55,12 +55,12 @@ func NewCronExpression(parser parsers.CronParser) (*Expression, error) {
 
 func (e *Expression) ToString() string {
 	return fmt.Sprintf(`
-		minute 			%s
-		hour			%s
-		day of month 	%s
-		month 			%s
-		day of week 	%s
-		command 		%s  
+		minute: %s
+		hour: %s
+		day of month: %s
+		month: %s
+		day of week: %s
+		command: %s  
 	`,
 		e.Minute,
 		e.Hour,
