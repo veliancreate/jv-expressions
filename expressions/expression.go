@@ -18,39 +18,30 @@ type Expression struct {
 func NewCronExpression(cronParser parsers.CronParser) (*Expression, error) {
 	var expression *Expression
 
-	expr := cronParser.Expression
-
-	rawMinute := expr[0]
-	minute, err := cronParser.Minute.Parse(rawMinute)
+	minute, err := cronParser.Minute.Parse()
 	if err != nil {
 		return expression, fmt.Errorf("could not parse minute due to %w", err)
 	}
 
-	rawHour := expr[1]
-	hour, err := cronParser.Hour.Parse(rawHour)
+	hour, err := cronParser.Hour.Parse()
 	if err != nil {
 		return expression, fmt.Errorf("could not parse hour due to %w", err)
 	}
 
-	rawDayOfMonth := expr[2]
-	dayOfMonth, err := cronParser.DayOfMonth.Parse(rawDayOfMonth)
+	dayOfMonth, err := cronParser.DayOfMonth.Parse()
 	if err != nil {
 		return expression, fmt.Errorf("could not parse day of month due to %w", err)
 	}
 
-	rawMonth := expr[3]
-	month, err := cronParser.Month.Parse(rawMonth)
+	month, err := cronParser.Month.Parse()
 	if err != nil {
 		return expression, fmt.Errorf("could not parse month due to %w", err)
 	}
 
-	rawDayOfWeek := expr[4]
-	dayOfWeek, err := cronParser.DayOfWeek.Parse(rawDayOfWeek)
+	dayOfWeek, err := cronParser.DayOfWeek.Parse()
 	if err != nil {
 		return expression, fmt.Errorf("could not parse day of week due to %w", err)
 	}
-
-	rawCommand := expr[5]
 
 	return &Expression{
 		Minute:     minute,
@@ -58,7 +49,7 @@ func NewCronExpression(cronParser parsers.CronParser) (*Expression, error) {
 		DayOfMonth: dayOfMonth,
 		Month:      month,
 		DayOfWeek:  dayOfWeek,
-		Command:    rawCommand,
+		Command:    cronParser.Command,
 	}, nil
 }
 

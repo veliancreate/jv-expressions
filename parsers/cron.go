@@ -10,15 +10,19 @@ import (
 
 type cronUnitParser struct {
 	minAndMaxGetter timeunits.MinAndMaxGetter
+	val             string
 }
 
-func newCronUnitParser(minAndMaxGetter timeunits.MinAndMaxGetter) cronUnitParser {
+func newCronUnitParser(minAndMaxGetter timeunits.MinAndMaxGetter, val string) cronUnitParser {
 	return cronUnitParser{
 		minAndMaxGetter,
+		val,
 	}
 }
 
-func (cp cronUnitParser) Parse(val string) (string, error) {
+func (cp cronUnitParser) Parse() (string, error) {
+	val := cp.val
+
 	if val == "*" {
 		return newAny(cp.minAndMaxGetter)
 	}
@@ -46,12 +50,13 @@ func (cp cronUnitParser) Parse(val string) (string, error) {
 }
 
 type CronParser struct {
-	Minute     cronUnitParser
-	Hour       cronUnitParser
-	DayOfMonth cronUnitParser
-	Month      cronUnitParser
-	DayOfWeek  cronUnitParser
-	Expression []string
+	Minute         cronUnitParser
+	Hour           cronUnitParser
+	DayOfMonth     cronUnitParser
+	Month          cronUnitParser
+	DayOfWeek      cronUnitParser
+	Command        string
+	RawExpressions []string
 }
 
 func NewCronParser(rawExpr string) (CronParser, error) {
@@ -61,12 +66,20 @@ func NewCronParser(rawExpr string) (CronParser, error) {
 		return CronParser{}, fmt.Errorf("not enough expressions")
 	}
 
+	rawMinute := expr[0]
+	rawHour := expr[1]
+	rawDayOfMonth := expr[2]
+	rawMonth := expr[3]
+	rawDayOfWeek := expr[4]
+	rawCommand := expr[5]
+
 	return CronParser{
-		Minute:     newCronUnitParser(timeunits.NewMinute()),
-		Hour:       newCronUnitParser(timeunits.NewHour()),
-		DayOfMonth: newCronUnitParser(timeunits.NewDayOfMonth()),
-		Month:      newCronUnitParser(timeunits.NewMonth()),
-		DayOfWeek:  newCronUnitParser(timeunits.NewDayOfWeek()),
-		Expression: expr,
+		Minute:         newCronUnitParser(timeunits.NewMinute(), rawMinute),
+		Hour:           newCronUnitParser(timeunits.NewHour(), rawHour),
+		DayOfMonth:     newCronUnitParser(timeunits.NewDayOfMonth(), rawDayOfMonth),
+		Month:          newCronUnitParser(timeunits.NewMonth(), rawMonth),
+		DayOfWeek:      newCronUnitParser(timeunits.NewDayOfWeek(), rawDayOfWeek),
+		Command:        rawCommand,
+		RawExpressions: expr,
 	}, nil
 }
