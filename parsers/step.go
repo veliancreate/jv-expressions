@@ -25,7 +25,7 @@ func newStep(val string, minAndMaxGetter timeunits.MinAndMaxGetter) (step, error
 	}
 
 	return step{
-		value: fmt.Sprintf("%v", val),
+		value: output,
 	}, nil
 }
 

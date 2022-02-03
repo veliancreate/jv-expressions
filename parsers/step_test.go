@@ -52,7 +52,7 @@ func TestStepParser(t *testing.T) {
 			}
 
 			if parsed.Value() != tt.expected {
-				t.Fatalf("expected %v got %v", tt.expected, parsed)
+				t.Fatalf("expected %v got %v", tt.expected, parsed.Value())
 			}
 		})
 	}
