@@ -51,7 +51,7 @@ func TestStepParser(t *testing.T) {
 				t.Fatalf("error in parsing %v", err)
 			}
 
-			if parsed != tt.expected {
+			if parsed.Value() != tt.expected {
 				t.Fatalf("expected %v got %v", tt.expected, parsed)
 			}
 		})

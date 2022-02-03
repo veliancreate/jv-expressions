@@ -6,21 +6,21 @@ import (
 	"github.com/veliancreate/jv-expressions/timeunits"
 )
 
-func newRange(val []string, minAndMaxGetter timeunits.MinAndMaxGetter) (string, error) {
+func newRange(val []string, minAndMaxGetter timeunits.MinAndMaxGetter) (ranger, error) {
 	var output string
 
 	first, err := stringToInt(val[0], minAndMaxGetter)
 	if err != nil {
-		return "", fmt.Errorf("could not convert range value to int due to %w", err)
+		return ranger{}, fmt.Errorf("could not convert range value to int due to %w", err)
 	}
 
 	last, err := stringToInt(val[1], minAndMaxGetter)
 	if err != nil {
-		return "", fmt.Errorf("could not convert range value to int due to %w", err)
+		return ranger{}, fmt.Errorf("could not convert range value to int due to %w", err)
 	}
 
 	if first > last {
-		return "", fmt.Errorf("first range value is higher than last")
+		return ranger{}, fmt.Errorf("first range value is higher than last")
 	}
 
 	for i := first; i <= last; i++ {
@@ -31,5 +31,15 @@ func newRange(val []string, minAndMaxGetter timeunits.MinAndMaxGetter) (string, 
 		}
 	}
 
-	return output, nil
+	return ranger{
+		value: output,
+	}, nil
+}
+
+type ranger struct {
+	value string
+}
+
+func (i ranger) Value() string {
+	return i.value
 }

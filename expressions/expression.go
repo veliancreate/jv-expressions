@@ -44,11 +44,11 @@ func NewCronExpression(cronParser parsers.CronParser) (*Expression, error) {
 	}
 
 	return &Expression{
-		Minute:     minute,
-		Hour:       hour,
-		DayOfMonth: dayOfMonth,
-		Month:      month,
-		DayOfWeek:  dayOfWeek,
+		Minute:     minute.Value(),
+		Hour:       hour.Value(),
+		DayOfMonth: dayOfMonth.Value(),
+		Month:      month.Value(),
+		DayOfWeek:  dayOfWeek.Value(),
 		Command:    cronParser.Command,
 	}, nil
 }

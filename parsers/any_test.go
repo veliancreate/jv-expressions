@@ -31,7 +31,7 @@ func TestAnyParser(t *testing.T) {
 				t.Fatalf("error parsing * %v", err)
 			}
 
-			if parsed != tt.expected {
+			if parsed.Value() != tt.expected {
 				t.Fatalf("expected %v, got %v", tt.expected, parsed)
 			}
 		})

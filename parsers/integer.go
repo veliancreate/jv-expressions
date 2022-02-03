@@ -6,17 +6,27 @@ import (
 	"github.com/veliancreate/jv-expressions/timeunits"
 )
 
-func newInteger(val int, minAndMaxGetter timeunits.MinAndMaxGetter) (string, error) {
+func newInteger(val int, minAndMaxGetter timeunits.MinAndMaxGetter) (integer, error) {
 	max := minAndMaxGetter.Max()
 	min := minAndMaxGetter.Min()
 
 	if val > max {
-		return "", fmt.Errorf("val %v is over max %v", val, max)
+		return integer{}, fmt.Errorf("val %v is over max %v", val, max)
 	}
 
 	if val < min {
-		return "", fmt.Errorf("val %v is under min %v", val, min)
+		return integer{}, fmt.Errorf("val %v is under min %v", val, min)
 	}
 
-	return fmt.Sprintf("%v", val), nil
+	return integer{
+		value: fmt.Sprintf("%v", val),
+	}, nil
+}
+
+type integer struct {
+	value string
+}
+
+func (i integer) Value() string {
+	return i.value
 }

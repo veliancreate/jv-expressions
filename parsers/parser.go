@@ -7,6 +7,10 @@ import (
 	"github.com/veliancreate/jv-expressions/timeunits"
 )
 
+type UnitExpression interface {
+	Value() string
+}
+
 func stringToInt(item string, getter timeunits.MinAndMaxGetter) (int, error) {
 	min := getter.Min()
 	max := getter.Max()

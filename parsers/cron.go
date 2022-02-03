@@ -20,7 +20,7 @@ func newCronUnitParser(minAndMaxGetter timeunits.MinAndMaxGetter, val string) cr
 	}
 }
 
-func (cp cronUnitParser) Parse() (string, error) {
+func (cp cronUnitParser) Parse() (UnitExpression, error) {
 	val := cp.val
 
 	if val == "*" {
@@ -46,7 +46,7 @@ func (cp cronUnitParser) Parse() (string, error) {
 		return newRange([]string{splitRange[0], splitRange[1]}, cp.minAndMaxGetter)
 	}
 
-	return "", fmt.Errorf("unsupported type")
+	return any{}, fmt.Errorf("unsupported type")
 }
 
 type CronParser struct {

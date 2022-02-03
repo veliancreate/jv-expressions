@@ -6,7 +6,7 @@ import (
 	"github.com/veliancreate/jv-expressions/timeunits"
 )
 
-func newAny(minAndMaxGetter timeunits.MinAndMaxGetter) (string, error) {
+func newAny(minAndMaxGetter timeunits.MinAndMaxGetter) (any, error) {
 	min := minAndMaxGetter.Min()
 	max := minAndMaxGetter.Max()
 	var output string
@@ -18,5 +18,15 @@ func newAny(minAndMaxGetter timeunits.MinAndMaxGetter) (string, error) {
 		}
 	}
 
-	return output, nil
+	return any{
+		value: output,
+	}, nil
+}
+
+type any struct {
+	value string
+}
+
+func (a any) Value() string {
+	return a.value
 }
