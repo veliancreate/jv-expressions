@@ -2,67 +2,71 @@ package parsers
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/veliancreate/jv-expressions/timeunits"
 )
 
+type cronUnitParser struct {
+	minAndMaxGetter timeunits.MinAndMaxGetter
+}
+
+func newCronUnitParser(minAndMaxGetter timeunits.MinAndMaxGetter) cronUnitParser {
+	return cronUnitParser{
+		minAndMaxGetter,
+	}
+}
+
+func (cp cronUnitParser) Parse(val string) (string, error) {
+	if val == "*" {
+		return newAny(cp.minAndMaxGetter)
+	}
+
+	if i, err := strconv.Atoi(val); err == nil {
+		return newInteger(i, cp.minAndMaxGetter)
+	}
+
+	splitStep := strings.Split(val, "/")
+	if len(splitStep) == 2 && splitStep[0] == "*" {
+		return newStep(splitStep[1], cp.minAndMaxGetter)
+	}
+
+	splitList := strings.Split(val, ",")
+	if len(splitList) > 1 {
+		return newList(splitList, cp.minAndMaxGetter)
+	}
+
+	splitRange := strings.Split(val, "-")
+	if len(splitRange) == 2 {
+		return newRange([]string{splitRange[0], splitRange[1]}, cp.minAndMaxGetter)
+	}
+
+	return "", fmt.Errorf("unsupported type")
+}
+
 type CronParser struct {
-	Minute     Parser
-	Hour       Parser
-	DayOfMonth Parser
-	Month      Parser
-	DayOfWeek  Parser
-	Command    string
+	Minute     cronUnitParser
+	Hour       cronUnitParser
+	DayOfMonth cronUnitParser
+	Month      cronUnitParser
+	DayOfWeek  cronUnitParser
+	Expression []string
 }
 
 func NewCronParser(rawExpr string) (CronParser, error) {
-	var cronParser CronParser
-
 	expr := strings.Split(rawExpr, " ")
 
 	if len(expr) != 6 {
-		return cronParser, fmt.Errorf("not enough expressions")
-	}
-
-	minute := expr[0]
-	hour := expr[1]
-	dayOfMonth := expr[2]
-	month := expr[3]
-	dayOfWeek := expr[4]
-	command := expr[5]
-
-	minuteParser, err := getParser(minute, timeunits.NewMinute())
-	if err != nil {
-		return cronParser, fmt.Errorf("getting minute type :: %w", err)
-	}
-
-	hourParser, err := getParser(hour, timeunits.NewHour())
-	if err != nil {
-		return cronParser, fmt.Errorf("getting hour type :: %w", err)
-	}
-
-	dayOfMonthParser, err := getParser(dayOfMonth, timeunits.NewDayOfMonth())
-	if err != nil {
-		return cronParser, fmt.Errorf("getting day of month type :: %w", err)
-	}
-
-	monthParser, err := getParser(month, timeunits.NewMonth())
-	if err != nil {
-		return cronParser, fmt.Errorf("getting month type :: %w", err)
-	}
-
-	dayOfWeekParser, err := getParser(dayOfWeek, timeunits.NewDayOfWeek())
-	if err != nil {
-		return cronParser, fmt.Errorf("getting dayOfWeek type :: %w", err)
+		return CronParser{}, fmt.Errorf("not enough expressions")
 	}
 
 	return CronParser{
-		Minute:     minuteParser,
-		Hour:       hourParser,
-		DayOfMonth: dayOfMonthParser,
-		Month:      monthParser,
-		DayOfWeek:  dayOfWeekParser,
-		Command:    command,
+		Minute:     newCronUnitParser(timeunits.NewMinute()),
+		Hour:       newCronUnitParser(timeunits.NewHour()),
+		DayOfMonth: newCronUnitParser(timeunits.NewDayOfMonth()),
+		Month:      newCronUnitParser(timeunits.NewMonth()),
+		DayOfWeek:  newCronUnitParser(timeunits.NewDayOfWeek()),
+		Expression: expr,
 	}, nil
 }

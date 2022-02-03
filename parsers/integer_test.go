@@ -9,23 +9,27 @@ import (
 func TestNumberParser(t *testing.T) {
 	tests := []struct {
 		name        string
-		parser      Parser
+		val         int
 		shouldError bool
 		expected    string
+		unit        timeunits.Unit
 	}{
 		{
 			name:        "fails when the input is below the min",
-			parser:      NewInteger(0, timeunits.NewDayOfWeek()),
+			val:         0,
+			unit:        timeunits.NewDayOfWeek(),
 			shouldError: true,
 		},
 		{
 			name:        "fails when the input is below the max",
-			parser:      NewInteger(8, timeunits.NewDayOfWeek()),
+			val:         8,
+			unit:        timeunits.NewDayOfWeek(),
 			shouldError: true,
 		},
 		{
 			name:        "returns the integer",
-			parser:      NewInteger(7, timeunits.NewDayOfWeek()),
+			val:         7,
+			unit:        timeunits.NewDayOfWeek(),
 			shouldError: false,
 			expected:    "7",
 		},
@@ -33,7 +37,7 @@ func TestNumberParser(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			parsed, err := tt.parser.Parse()
+			parsed, err := newInteger(tt.val, tt.unit)
 			if err != nil && !tt.shouldError {
 				t.Fatalf("error in parsing %v", err)
 			}

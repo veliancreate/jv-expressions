@@ -9,31 +9,35 @@ import (
 func TestListParser(t *testing.T) {
 	tests := []struct {
 		name        string
-		parser      Parser
 		shouldError bool
 		expected    string
+		unit        timeunits.Unit
+		val         []string
 	}{
 		{
 			name:        "list parser prints",
-			parser:      NewList([]string{"1", "2", "3"}, timeunits.NewDayOfWeek()),
 			shouldError: false,
 			expected:    "1 2 3",
+			val:         []string{"1", "2", "3"},
+			unit:        timeunits.NewDayOfWeek(),
 		},
 		{
 			name:        "list parser value lower than min",
-			parser:      NewList([]string{"0", "2", "3"}, timeunits.NewDayOfWeek()),
 			shouldError: true,
+			val:         []string{"0", "2", "3"},
+			unit:        timeunits.NewDayOfWeek(),
 		},
 		{
 			name:        "list parser value higher than max",
-			parser:      NewList([]string{"8", "2", "3"}, timeunits.NewDayOfWeek()),
 			shouldError: true,
+			val:         []string{"8", "2", "3"},
+			unit:        timeunits.NewDayOfWeek(),
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			parsed, err := tt.parser.Parse()
+			parsed, err := newList(tt.val, tt.unit)
 			if err != nil && !tt.shouldError {
 				t.Fatalf("error in parsing %v", err)
 			}

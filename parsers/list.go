@@ -6,23 +6,11 @@ import (
 	"github.com/veliancreate/jv-expressions/timeunits"
 )
 
-func NewList(val []string, minAndMaxGetter timeunits.MinAndMaxGetter) List {
-	return List{
-		val,
-		minAndMaxGetter,
-	}
-}
-
-type List struct {
-	val             []string
-	minAndMaxGetter timeunits.MinAndMaxGetter
-}
-
-func (l List) Parse() (string, error) {
+func newList(val []string, minAndMaxGetter timeunits.MinAndMaxGetter) (string, error) {
 	var output string
 
-	for i, listItem := range l.val {
-		value, err := stringToInt(listItem, l.minAndMaxGetter)
+	for i, listItem := range val {
+		value, err := stringToInt(listItem, minAndMaxGetter)
 		if err != nil {
 			return "", fmt.Errorf("could not convert list value to int due to %w", err)
 		}

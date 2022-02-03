@@ -6,24 +6,12 @@ import (
 	"github.com/veliancreate/jv-expressions/timeunits"
 )
 
-func NewStep(val string, minAndMaxGetter timeunits.MinAndMaxGetter) Step {
-	return Step{
-		val,
-		minAndMaxGetter,
-	}
-}
-
-type Step struct {
-	val             string
-	minAndMaxGetter timeunits.MinAndMaxGetter
-}
-
-func (s Step) Parse() (string, error) {
+func newStep(val string, minAndMaxGetter timeunits.MinAndMaxGetter) (string, error) {
 	var output string
-	min := s.minAndMaxGetter.Min()
-	max := s.minAndMaxGetter.Max()
+	min := minAndMaxGetter.Min()
+	max := minAndMaxGetter.Max()
 
-	value, err := stringToInt(s.val, s.minAndMaxGetter)
+	value, err := stringToInt(val, minAndMaxGetter)
 	if err != nil {
 		return "", fmt.Errorf("could not convert step value to int due to %w", err)
 	}

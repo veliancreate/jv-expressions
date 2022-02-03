@@ -40,27 +40,27 @@ func TestNewCronExpression(t *testing.T) {
 			}
 
 			if e.Minute != tt.expr.Minute {
-				t.Fatalf("expected %v got %v", e.Minute, tt.expr.Minute)
+				t.Fatalf("expected %v got %v", tt.expr.Minute, e.Minute)
 			}
 
 			if e.Hour != tt.expr.Hour {
-				t.Fatalf("expected %v got %v", e.Hour, tt.expr.Hour)
+				t.Fatalf("expected %v got %v", tt.expr.Hour, e.Hour)
 			}
 
 			if e.DayOfMonth != tt.expr.DayOfMonth {
-				t.Fatalf("expected %v got %v", e.DayOfMonth, tt.expr.DayOfMonth)
+				t.Fatalf("expected %v got %v", tt.expr.DayOfMonth, e.DayOfMonth)
 			}
 
 			if e.Month != tt.expr.Month {
-				t.Fatalf("expected %v got %v", e.Month, tt.expr.Month)
+				t.Fatalf("expected %v got %v", tt.expr.Month, e.Month)
 			}
 
-			if e.DayOfMonth != tt.expr.DayOfMonth {
-				t.Fatalf("expected %v got %v", e.DayOfMonth, tt.expr.DayOfMonth)
+			if e.DayOfWeek != tt.expr.DayOfWeek {
+				t.Fatalf("expected %v got %v", tt.expr.DayOfWeek, e.DayOfWeek)
 			}
 
 			if e.Command != tt.expr.Command {
-				t.Fatalf("expected %v got %v", e.DayOfMonth, tt.expr.DayOfMonth)
+				t.Fatalf("expected %v got %v", tt.expr.Command, e.Command)
 			}
 		})
 	}
