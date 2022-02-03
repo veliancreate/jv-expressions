@@ -7,7 +7,7 @@ import (
 	"github.com/veliancreate/jv-expressions/timeunits"
 )
 
-type UnitExpression interface {
+type ExpressionTimeUnit interface {
 	Value() string
 }
 

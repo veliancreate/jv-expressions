@@ -42,7 +42,7 @@ func TestCronUnitParser(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			parsed, err := newCronUnitParser(timeunits.NewDayOfWeek(), tt.value).Parse()
+			parsed, err := newCronTimeUnitParser(timeunits.NewDayOfWeek(), tt.value).Parse()
 			if err != nil {
 				t.Fatalf("unexpected error in parsing %v", err)
 			}
@@ -72,7 +72,7 @@ func TestCronUnitParserValidation(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := newCronUnitParser(timeunits.NewDayOfWeek(), tt.value).Parse()
+			_, err := newCronTimeUnitParser(timeunits.NewDayOfWeek(), tt.value).Parse()
 			if err == nil {
 				t.Fatalf("this should fail validation check")
 			}

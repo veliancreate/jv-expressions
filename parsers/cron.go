@@ -13,14 +13,14 @@ type cronUnitParser struct {
 	val             string
 }
 
-func newCronUnitParser(minAndMaxGetter timeunits.MinAndMaxGetter, val string) cronUnitParser {
+func newCronTimeUnitParser(minAndMaxGetter timeunits.MinAndMaxGetter, val string) cronUnitParser {
 	return cronUnitParser{
 		minAndMaxGetter,
 		val,
 	}
 }
 
-func (cp cronUnitParser) Parse() (UnitExpression, error) {
+func (cp cronUnitParser) Parse() (ExpressionTimeUnit, error) {
 	val := cp.val
 
 	if val == "*" {
@@ -74,11 +74,11 @@ func NewCronParser(rawExpr string) (CronParser, error) {
 	rawCommand := expr[5]
 
 	return CronParser{
-		Minute:         newCronUnitParser(timeunits.NewMinute(), rawMinute),
-		Hour:           newCronUnitParser(timeunits.NewHour(), rawHour),
-		DayOfMonth:     newCronUnitParser(timeunits.NewDayOfMonth(), rawDayOfMonth),
-		Month:          newCronUnitParser(timeunits.NewMonth(), rawMonth),
-		DayOfWeek:      newCronUnitParser(timeunits.NewDayOfWeek(), rawDayOfWeek),
+		Minute:         newCronTimeUnitParser(timeunits.NewMinute(), rawMinute),
+		Hour:           newCronTimeUnitParser(timeunits.NewHour(), rawHour),
+		DayOfMonth:     newCronTimeUnitParser(timeunits.NewDayOfMonth(), rawDayOfMonth),
+		Month:          newCronTimeUnitParser(timeunits.NewMonth(), rawMonth),
+		DayOfWeek:      newCronTimeUnitParser(timeunits.NewDayOfWeek(), rawDayOfWeek),
 		Command:        rawCommand,
 		RawExpressions: expr,
 	}, nil
